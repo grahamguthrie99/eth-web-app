@@ -9,7 +9,7 @@ const main = async () => {
     const portal = await Token.deploy();
     await portal.deployed();
   
-    console.log('WavePortal address: ', portal.address);
+    console.log('PumpPortal address: ', portal.address);
   };
   
   const runMain = async () => {
