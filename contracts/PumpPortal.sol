@@ -15,7 +15,7 @@ contract PumpPortal {
 
     Pump[] pumps;
 
-    constructor() {
+    constructor() payable {
         console.log("Yo yo, I am a contract and I am smart");
     }
 
@@ -24,6 +24,14 @@ contract PumpPortal {
         console.log("%s has a pump!", msg.sender);
         pumps.push(Pump(msg.sender, _message, block.timestamp));
         emit NewPump(msg.sender, block.timestamp, _message);
+
+        uint256 prizeAmount = 0.0001 ether;
+        require(
+            prizeAmount <= address(this).balance,
+            "Trying to withdraw more money than the contract has."
+        );
+        (bool success, ) = (msg.sender).call{value: prizeAmount}("");
+        require(success, "Failed to withdraw money from contract.");
     }
 
     function getAllPumps() public view returns (Pump[] memory) {
