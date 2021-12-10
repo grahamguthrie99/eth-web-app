@@ -6,13 +6,17 @@ const main = async () => {
     console.log("Contract deployed to:", pumpContract.address);
 
     let pumpCount;
-  pumpCount = await pumpContract.getTotalPumps();
+    pumpCount = await pumpContract.getTotalPumps();
   
-  let pumpTxn = await pumpContract.pump();
+
+
+  pumpTxn = await pumpContract.connect(randomPerson).pump('Another message!');
   await pumpTxn.wait();
 
-  pumpTxn = await pumpContract.connect(randomPerson).pump();
-await pumpTxn.wait();
+
+
+  let allPumps = await pumpContract.getAllPumps();
+  console.log(allPumps);
 
   pumpCount = await pumpContract.getTotalPumps();
   };
